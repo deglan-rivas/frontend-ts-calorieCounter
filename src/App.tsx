@@ -35,6 +35,9 @@ function App() {
     console.log("Eliminando actividad ...", id)
   }
 
+  const foodCalories = activities.reduce((acc, activity) => (activity.category === "comida") ? acc + activity.calories : acc, 0)
+  const burnedCalories = activities.reduce((acc, activity) => (activity.category === "ejercicio") ? acc + activity.calories : acc, 0)
+
   return (
     <>
       <Counter
@@ -44,7 +47,10 @@ function App() {
         setActivity={setActivity}
         setActivities={setActivities}
       />
-      <Resume/>
+      <Resume
+        foodCalories={foodCalories}
+        burnedCalories={burnedCalories}
+      />
       <ActivityList
         updateActivity={updateActivity}
         deleteActivity={deleteActivity}
