@@ -32,7 +32,8 @@ function App() {
   }
 
   function deleteActivity (id) {
-    console.log("Eliminando actividad ...", id)
+    const updatedActivities = activities.filter((activity) => activity.id !== id)
+    setActivities(updatedActivities)
   }
 
   const foodCalories = activities.reduce((acc, activity) => (activity.category === "comida") ? acc + activity.calories : acc, 0)
