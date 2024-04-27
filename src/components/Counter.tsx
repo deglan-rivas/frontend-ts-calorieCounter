@@ -1,4 +1,7 @@
-export default function Counter ({restartApp, saveActivity}) {
+export default function Counter ({restartApp, saveActivity, activity, setActivity, setActivities}) {
+  // Object.values(activity).some(value => value === "" || value === 0)
+  const isFull = Object.values(activity).every((value) => !!value)
+
   return (
     <>
       <section className="bg-lime-600">
@@ -33,7 +36,9 @@ export default function Counter ({restartApp, saveActivity}) {
               // multiple
               // disabled
               // size={3}
-              defaultValue={""}
+              // defaultValue={""}
+              onChange={(e) => setActivity({ ...activity, [e.target.name]: e.target.value })}
+              value={activity.category}
             >
               <option 
                 className="text-sm" 
@@ -54,39 +59,48 @@ export default function Counter ({restartApp, saveActivity}) {
 
           <div className="mb-4">
             <label 
-              htmlFor="category"
+              htmlFor="activity"
               className="block font-semibold mb-4"
             >
               Actividad:
             </label>
             <input 
+              id="activity"
+              name="activity"
               type="text"
               className="border border-gray-300 w-full rounded-md px-2 py-2 text-ellipsis"
               placeholder="Ej. Comida, Jugo de Naranja, Ensalada, Ejercicio, Pesas, Bicicleta"
+              onChange={(e) => setActivity({ ...activity, [e.target.name]: e.target.value })}
+              value={activity.activity}
             />
           </div>
 
           <div className="mb-8">
             <label 
-              htmlFor="category"
+              htmlFor="calories"
               className="block font-semibold mb-4"
             >
               Calorías:
             </label>
             <input 
+              id="calories"
+              name="calories"
               type="number"
               className="border border-gray-300 px-2 py-2 w-full rounded-md"
-              defaultValue={0}
+              // defaultValue={0}
               min={0}
               step={2}
+              onChange={(e) => setActivity({ ...activity, [e.target.name]: +e.target.value })}
+              value={activity.calories}
             />
           </div>
 
           <input 
             type="submit"
-            className="bg-black text-white font-semibold px-2 py-2 rounded-md cursor-pointer uppercase w-full"
-            value={'Guardar Comida'}
+            className={`${isFull ? 'bg-black text-white cursor-pointer' : 'bg-black/20 text-black/20 cursor-not-allowed'} font-semibold px-2 py-2 rounded-md uppercase w-full`}
+            value={`Guardar ${activity.category}`}
             onClick={(e) => saveActivity(e)}
+            disabled={!isFull}
           />
         </form>
       </section>
