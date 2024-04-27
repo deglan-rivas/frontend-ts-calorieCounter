@@ -68,7 +68,7 @@ export default function Counter () {
             <input 
               type="number"
               className="border border-gray-300 px-2 py-2 w-full rounded-md"
-              value={0}
+              defaultValue={0}
               min={0}
               step={2}
             />
