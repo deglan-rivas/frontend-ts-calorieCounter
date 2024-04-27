@@ -1,4 +1,4 @@
-export default function Counter ({restartApp, saveActivity, activity, setActivity, setActivities}) {
+export default function Counter ({restartApp, saveActivity, activity, setActivity, activities}) {
   // Object.values(activity).some(value => value === "" || value === 0)
   const isFull = Object.values(activity).every((value) => !!value)
 
@@ -10,7 +10,7 @@ export default function Counter ({restartApp, saveActivity, activity, setActivit
             Contador de calorías
           </h1>
 
-          <button className="bg-black rounded-md uppercase text-white font-semibold px-2 py-2 text-sm"
+          <button className={`${activities.length === 0 ? 'bg-black/20 text-white/20 cursor-not-allowed' : 'bg-black text-white cursor-pointer'} rounded-md uppercase font-semibold px-2 py-2 text-sm`}
             onClick={() => restartApp()}
           >
             Reiniciar App

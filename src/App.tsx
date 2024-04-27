@@ -17,7 +17,7 @@ function App() {
   }, [activities])
 
   function restartApp () {
-    console.log("Reiniciando App...")
+    setActivities([])
   }
 
   function saveActivity (e) {
@@ -46,7 +46,7 @@ function App() {
         saveActivity={saveActivity}
         activity={activity}
         setActivity={setActivity}
-        setActivities={setActivities}
+        activities={activities}
       />
       <Resume
         foodCalories={foodCalories}

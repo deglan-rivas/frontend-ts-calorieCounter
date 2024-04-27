@@ -61,14 +61,20 @@ export default function ActivityList ({deleteActivity, updateActivity, activitie
       </h2>
 
       {
-        activities.map((activityCard) => (
-          <ActivityCard 
+        activities.length === 0 ? (
+          <p className="text-lg text-center">
+            No hay actividades aún ...
+          </p>
+        ) : (
+          activities.map((activityCard) => (
+            <ActivityCard 
             key={activityCard.id} 
             activityCard={activityCard}
             updateActivity={updateActivity}
             deleteActivity={deleteActivity}
-          />
-        ))
+            />
+          ))
+        )
       }
     </section>
   )
