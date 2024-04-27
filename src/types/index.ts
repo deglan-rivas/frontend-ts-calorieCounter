@@ -3,3 +3,7 @@ export interface Activity {
   activity: string
   calories: number
 }
+
+export interface DisplayedActivity extends Activity {
+  id: string
+}
