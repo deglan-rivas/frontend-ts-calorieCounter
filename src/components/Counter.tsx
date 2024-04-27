@@ -1,4 +1,4 @@
-export default function Counter () {
+export default function Counter ({restartApp, saveActivity}) {
   return (
     <>
       <section className="bg-lime-600">
@@ -7,7 +7,9 @@ export default function Counter () {
             Contador de calorías
           </h1>
 
-          <button className="bg-black rounded-md uppercase text-white font-semibold px-2 py-2 text-sm">
+          <button className="bg-black rounded-md uppercase text-white font-semibold px-2 py-2 text-sm"
+            onClick={() => restartApp()}
+          >
             Reiniciar App
           </button>
         </div>
@@ -31,8 +33,14 @@ export default function Counter () {
               // multiple
               // disabled
               // size={3}
+              defaultValue={""}
             >
-              <option className="text-sm" disabled selected>
+              <option 
+                className="text-sm" 
+                value={""}
+                disabled
+                // selected  
+              >
                 -- Seleccione --
               </option>
               <option value="comida" className="text-sm">
@@ -78,6 +86,7 @@ export default function Counter () {
             type="submit"
             className="bg-black text-white font-semibold px-2 py-2 rounded-md cursor-pointer uppercase w-full"
             value={'Guardar Comida'}
+            onClick={(e) => saveActivity(e)}
           />
         </form>
       </section>

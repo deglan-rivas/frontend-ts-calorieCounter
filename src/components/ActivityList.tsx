@@ -16,7 +16,9 @@ const Activities = [
   }
 ]
 
-function ActivityCard ({category, name, calories}) {
+function ActivityCard ({activity, updateActivity, deleteActivity}) {
+  const {id, category, name, calories} = activity
+
   return (
     <div className="border border-gray-300 rounded-md py-10 px-5 shadow-md relative">
         <div className={`${category==='Comida' ? 'bg-lime-500' : 'bg-orange-500'} text-white text-center uppercase w-40 py-2 absolute -left-4 top-2`}>
@@ -33,15 +35,24 @@ function ActivityCard ({category, name, calories}) {
             </p>
           </div>
           <div className="flex justify-between gap-4">
-            <Update />
-            <Delete />
+            <button
+              onClick={() => updateActivity(id)}
+            >
+              <Update />
+            </button>
+
+            <button
+              onClick={() => deleteActivity(id)}
+            >
+              <Delete />
+            </button>
           </div>
         </div>
       </div>
   )
 }
 
-export default function ActivityList () {
+export default function ActivityList ({deleteActivity, updateActivity}) {
   return (
     <section className="py-10 px-10 space-y-4">
       <h2 className="text-4xl font-semibold text-gray-600 text-center">
@@ -52,9 +63,9 @@ export default function ActivityList () {
         Activities.map((activity) => (
           <ActivityCard 
             key={activity.id} 
-            category={activity.category} 
-            name={activity.name} 
-            calories={activity.calories}
+            activity={activity}
+            updateActivity={updateActivity}
+            deleteActivity={deleteActivity}
           />
         ))
       }
