@@ -1,6 +1,9 @@
 export default function Counter ({restartApp, saveActivity, activity, setActivity, activities}) {
   // Object.values(activity).some(value => value === "" || value === 0)
-  const isFull = Object.values(activity).every((value) => !!value)
+  const activityWithoutId = {...activity}
+  delete activityWithoutId.id
+  // console.log(activityWithoutId)
+  const isFull = Object.values(activityWithoutId).every((value) => !!value)
 
   return (
     <>

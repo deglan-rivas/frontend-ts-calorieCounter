@@ -4,12 +4,12 @@ import { v4 as uuidv4 } from 'uuid';
 import ActivityList from './components/ActivityList';
 import Counter from "./components/Counter";
 import Resume from "./components/Resume";
-import { Activity, DisplayedActivity } from './types';
+import { DisplayedActivity } from './types';
 
 function App() {
-  const initiaActivity = {category:"", activity:"", calories:0}
+  const initiaActivity = {category:"", activity:"", calories:0, id:""}
   const initialActivities = localStorage.getItem('activities') ? JSON.parse(localStorage.getItem('activities')!) : []
-  const [activity, setActivity] = useState(initiaActivity as Activity)
+  const [activity, setActivity] = useState(initiaActivity as DisplayedActivity)
   const [activities, setActivities] = useState(initialActivities as DisplayedActivity[])
 
   useEffect(() => {
@@ -18,17 +18,31 @@ function App() {
 
   function restartApp () {
     setActivities([])
+    setActivity(initiaActivity)
   }
 
   function saveActivity (e) {
     e.preventDefault()
-    const newActivity = {...activity, id: uuidv4()}
-    setActivities([...activities, newActivity])
+    // para actualizar priemro hay que ver si existe previamente en nuestro array de activities
+    // si no existe, se agrega
+    // si sí existe, se actualiza
+    // if (activity.id === "") {
+    if (!activity.id) {
+      const newActivity = {...activity, id: uuidv4()}
+      setActivities([...activities, newActivity])
+      setActivity(initiaActivity)
+      return
+    }
+
+    const updatedActivities = activities.map((act) => act.id === activity.id ? activity : act)
+    setActivities(updatedActivities)
     setActivity(initiaActivity)
+    return
   }
 
   function updateActivity (id) {
-    console.log("Actualizando actividad...", id)
+    const filteredActivity = activities.find((activity) => activity.id === id)!
+    setActivity(filteredActivity)
   }
 
   function deleteActivity (id) {
