@@ -16,12 +16,12 @@ function App() {
     localStorage.setItem('activities', JSON.stringify(activities))
   }, [activities])
 
-  function restartApp () {
+  function restartApp (): void {
     setActivities([])
     setActivity(initiaActivity)
   }
 
-  function saveActivity (e) {
+  function saveActivity (e: React.FormEvent): void {
     e.preventDefault()
     // para actualizar priemro hay que ver si existe previamente en nuestro array de activities
     // si no existe, se agrega
@@ -40,12 +40,12 @@ function App() {
     return
   }
 
-  function updateActivity (id) {
+  function updateActivity (id: DisplayedActivity['id']): void {
     const filteredActivity = activities.find((activity) => activity.id === id)!
     setActivity(filteredActivity)
   }
 
-  function deleteActivity (id) {
+  function deleteActivity (id: DisplayedActivity['id']): void {
     const updatedActivities = activities.filter((activity) => activity.id !== id)
     setActivities(updatedActivities)
   }

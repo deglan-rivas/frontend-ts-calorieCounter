@@ -5,5 +5,5 @@ export interface Activity {
 }
 
 export interface DisplayedActivity extends Activity {
-  id: string
+  id?: string
 }

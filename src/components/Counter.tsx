@@ -1,4 +1,14 @@
-export default function Counter ({restartApp, saveActivity, activity, setActivity, activities}) {
+import { DisplayedActivity } from "../types"
+
+interface CounterProps {
+  restartApp: () => void
+  saveActivity: (e: React.FormEvent) => void
+  activity: DisplayedActivity
+  setActivity: React.Dispatch<React.SetStateAction<DisplayedActivity>>
+  activities: DisplayedActivity[]
+}
+
+export default function Counter ({restartApp, saveActivity, activity, setActivity, activities}: CounterProps) {
   // Object.values(activity).some(value => value === "" || value === 0)
   const activityWithoutId = {...activity}
   delete activityWithoutId.id

@@ -19,7 +19,21 @@ const ResumeItems = [
   }
 ]
 
-function ResumeItem ({resumeItem, foodCalories, burnedCalories}) {
+interface ResumeProps {
+  foodCalories: number
+  burnedCalories: number
+}
+
+interface ResumeItemProps extends ResumeProps {
+  resumeItem: {
+    id: number
+    value: number
+    label: string
+    category: string
+  }
+}
+
+function ResumeItem ({resumeItem, foodCalories, burnedCalories}: ResumeItemProps) {
   const {label, category} = resumeItem
 
   return (
@@ -38,7 +52,7 @@ function ResumeItem ({resumeItem, foodCalories, burnedCalories}) {
   )
 }
 
-export default function Resume ({foodCalories, burnedCalories}) {
+export default function Resume ({foodCalories, burnedCalories}: ResumeProps) {
   return (
     <section className="bg-slate-800 py-10">
     <div className="max-w-4xl mx-auto">

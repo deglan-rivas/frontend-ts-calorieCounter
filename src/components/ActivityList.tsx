@@ -1,5 +1,6 @@
 import Delete from "../icons/Delete"
 import Update from "../icons/Update"
+import { DisplayedActivity } from "../types"
 
 // const Activities = [
 //   {
@@ -16,7 +17,17 @@ import Update from "../icons/Update"
 //   }
 // ]
 
-function ActivityCard ({activityCard, updateActivity, deleteActivity}) {
+interface ActivityListProps {
+  deleteActivity: (id: DisplayedActivity['id']) => void
+  updateActivity: (id: DisplayedActivity['id']) => void
+  activities: DisplayedActivity[]
+}
+
+interface ActivityCardProps extends Omit<ActivityListProps, 'activities'> {
+  activityCard: DisplayedActivity
+}
+
+function ActivityCard ({activityCard, updateActivity, deleteActivity}: ActivityCardProps) {
   // const {id, category, activity: name, calories} = activity
     const {id, category, activity, calories} = activityCard
 
@@ -53,7 +64,7 @@ function ActivityCard ({activityCard, updateActivity, deleteActivity}) {
   )
 }
 
-export default function ActivityList ({deleteActivity, updateActivity, activities}) {
+export default function ActivityList ({deleteActivity, updateActivity, activities}: ActivityListProps) {
   return (
     <section className="py-10 px-10 space-y-4">
       <h2 className="text-4xl font-semibold text-gray-600 text-center">
