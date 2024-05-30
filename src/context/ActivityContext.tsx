@@ -6,7 +6,7 @@ interface ActivityContextProps {
   dispatch: React.Dispatch<ActivityAction>;
 }
 
-const ActivityContext = createContext<ActivityContextProps>(null!);
+export const ActivityContext = createContext<ActivityContextProps>(null!);
 
 export const ActivityProvider = ({ children }: { children: React.ReactNode}) => {
   const [state, dispatch] = useReducer(activityReducer, initialState)
