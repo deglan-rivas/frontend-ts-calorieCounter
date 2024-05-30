@@ -1,11 +1,11 @@
 import { Activity } from "../types"
 
-type ActivityState = {
+export type ActivityState = {
   activities: Activity[],
   activity: Activity
 }
 
-type ActivityAction = 
+export type ActivityAction = 
   { type: "add-activity", payload: Activity } 
 
 const initialActivity = {
