@@ -1,3 +1,4 @@
+import { useActivity } from "../hooks/useActivity"
 import Delete from "../icons/Delete"
 import Update from "../icons/Update"
 import { DisplayedActivity } from "../types"
@@ -17,19 +18,14 @@ import { DisplayedActivity } from "../types"
 //   }
 // ]
 
-interface ActivityListProps {
-  deleteActivity: (id: DisplayedActivity['id']) => void
-  updateActivity: (id: DisplayedActivity['id']) => void
-  activities: DisplayedActivity[]
-}
-
-interface ActivityCardProps extends Omit<ActivityListProps, 'activities'> {
+interface ActivityCardProps {
   activityCard: DisplayedActivity
 }
 
-function ActivityCard ({activityCard, updateActivity, deleteActivity}: ActivityCardProps) {
+function ActivityCard ({activityCard}: ActivityCardProps) {
   // const {id, category, activity: name, calories} = activity
     const {id, category, activity, calories} = activityCard
+    const {dispatch} = useActivity()
 
   return (
     <div className="border border-gray-300 rounded-md py-10 px-5 shadow-md relative">
@@ -48,13 +44,14 @@ function ActivityCard ({activityCard, updateActivity, deleteActivity}: ActivityC
           </div>
           <div className="flex justify-between gap-4">
             <button
-              onClick={() => updateActivity(id)}
+              // onClick={() => updateActivity(id)}
+              onClick={() => dispatch({type: 'update-activity', payload: {id}})}
             >
               <Update />
             </button>
 
             <button
-              onClick={() => deleteActivity(id)}
+              onClick={() => dispatch({type: 'delete-activity', payload: {id}})}
             >
               <Delete />
             </button>
@@ -64,9 +61,11 @@ function ActivityCard ({activityCard, updateActivity, deleteActivity}: ActivityC
   )
 }
 
-export default function ActivityList ({deleteActivity, updateActivity, activities}: ActivityListProps) {
+export default function ActivityList () {
+  const {state: {activities}} = useActivity()
+
   return (
-    <section className="py-10 px-10 space-y-4">
+    <section className="py-10 px-10 space-y-4 max-w-4xl mx-auto">
       <h2 className="text-4xl font-semibold text-gray-600 text-center">
         Comida y Actividades
       </h2>
@@ -81,8 +80,6 @@ export default function ActivityList ({deleteActivity, updateActivity, activitie
             <ActivityCard 
             key={activityCard.id} 
             activityCard={activityCard}
-            updateActivity={updateActivity}
-            deleteActivity={deleteActivity}
             />
           ))
         )

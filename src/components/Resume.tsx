@@ -1,3 +1,6 @@
+import { useContext } from "react"
+import { ActivityContext } from "../context/ActivityContext"
+
 const ResumeItems = [
   {
     id: 1,
@@ -19,12 +22,7 @@ const ResumeItems = [
   }
 ]
 
-interface ResumeProps {
-  foodCalories: number
-  burnedCalories: number
-}
-
-interface ResumeItemProps extends ResumeProps {
+interface ResumeItemProps {
   resumeItem: {
     id: number
     value: number
@@ -33,8 +31,9 @@ interface ResumeItemProps extends ResumeProps {
   }
 }
 
-function ResumeItem ({resumeItem, foodCalories, burnedCalories}: ResumeItemProps) {
+function ResumeItem ({resumeItem}: ResumeItemProps) {
   const {label, category} = resumeItem
+  const {foodCalories, burnedCalories} = useContext(ActivityContext)
 
   return (
     <div className="flex flex-col justify-center gap-2">
@@ -52,7 +51,7 @@ function ResumeItem ({resumeItem, foodCalories, burnedCalories}: ResumeItemProps
   )
 }
 
-export default function Resume ({foodCalories, burnedCalories}: ResumeProps) {
+export default function Resume () {
   return (
     <section className="bg-slate-800 py-10">
     <div className="max-w-4xl mx-auto">
@@ -67,8 +66,6 @@ export default function Resume ({foodCalories, burnedCalories}: ResumeProps) {
             <ResumeItem
               key={item.id}
               resumeItem={item}
-              foodCalories={foodCalories}
-              burnedCalories={burnedCalories}
             />
           ))
         }

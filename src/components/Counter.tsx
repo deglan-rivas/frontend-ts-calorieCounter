@@ -1,19 +1,22 @@
-import { DisplayedActivity } from "../types"
+import { useEffect, useState } from "react";
+import { useActivity } from "../hooks/useActivity";
+import { initialActivity } from '../reducers/activity-reducer';
 
-interface CounterProps {
-  restartApp: () => void
-  saveActivity: (e: React.FormEvent) => void
-  activity: DisplayedActivity
-  setActivity: React.Dispatch<React.SetStateAction<DisplayedActivity>>
-  activities: DisplayedActivity[]
-}
-
-export default function Counter ({restartApp, saveActivity, activity, setActivity, activities}: CounterProps) {
+export default function Counter () {
   // Object.values(activity).some(value => value === "" || value === 0)
+  const {dispatch, state: { activities, activity: currentActivity}} = useActivity()
+  const [activity, setActivity] = useState(initialActivity)
   const activityWithoutId = {...activity}
   delete activityWithoutId.id
   // console.log(activityWithoutId)
   const isFull = Object.values(activityWithoutId).every((value) => !!value)
+
+  // console.log(currentActivity)
+  useEffect(() => {
+    if (!Object.values(currentActivity).some(value => value === "" || value === 0)) {
+      setActivity(currentActivity)
+    }
+  }, [currentActivity])
 
   return (
     <>
@@ -24,7 +27,7 @@ export default function Counter ({restartApp, saveActivity, activity, setActivit
           </h1>
 
           <button className={`${activities.length === 0 ? 'bg-black/20 text-white/20 cursor-not-allowed' : 'bg-black text-white cursor-pointer'} rounded-md uppercase font-semibold px-2 py-2 text-sm`}
-            onClick={() => restartApp()}
+            onClick={() => dispatch({type: 'restart-app'})}
           >
             Reiniciar App
           </button>
@@ -34,6 +37,12 @@ export default function Counter ({restartApp, saveActivity, activity, setActivit
       <section className="bg-lime-500 px-5 py-20">
         <form action=""
           className="bg-white rounded-md px-10 py-10 max-w-4xl mx-auto"
+          onSubmit={(e) => {
+            e.preventDefault()
+            // TODO falta limpiar este setActivity
+            setActivity(initialActivity)
+            dispatch({type: 'save-activity', payload: {activity: activity}})
+          }}
         >
           <div className="mb-4">
             <label 
@@ -112,7 +121,6 @@ export default function Counter ({restartApp, saveActivity, activity, setActivit
             type="submit"
             className={`${isFull ? 'bg-black text-white cursor-pointer' : 'bg-black/20 text-black/20 cursor-not-allowed'} font-semibold px-2 py-2 rounded-md uppercase w-full`}
             value={`Guardar ${activity.category}`}
-            onClick={(e) => saveActivity(e)}
             disabled={!isFull}
           />
         </form>
