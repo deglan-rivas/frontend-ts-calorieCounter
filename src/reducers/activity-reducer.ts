@@ -29,7 +29,7 @@ export const initialState = {
 export const activityReducer = (
   state: ActivityState = initialState,
   action: ActivityAction
-) => {
+):ActivityState => {
   switch (action.type) {
     case "restart-app":
       return {
@@ -55,9 +55,10 @@ export const activityReducer = (
       }
     }
     case "update-activity":
+      // TODO nullish operator works as workaround, it's risky to keep it in production, a better solution would be validate and throw an error using if (!activityToUpdate) {...} if it's undefined
       return {
         ...state,
-        activity: state.activities.find((activity) => activity.id === action.payload.id)
+        activity: state.activities.find((activity) => activity.id === action.payload.id)!
       }
     case "delete-activity":
       return {
